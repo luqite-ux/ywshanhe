@@ -83,7 +83,7 @@ export function RfqForm({ dict, idPrefix, defaultFamily = '', defaultReference =
           ref={summaryRef}
           tabIndex={-1}
           role="alert"
-          className="border-l-4 border-destructive bg-white p-4 text-sm outline-none"
+          className="rounded-lg border border-destructive/45 bg-white p-4 text-sm outline-none ring-1 ring-destructive/10"
         >
           <p className="font-semibold text-destructive">{errorCopy.summary}</p>
           <ul className="mt-2 flex flex-col gap-1">
@@ -104,8 +104,10 @@ export function RfqForm({ dict, idPrefix, defaultFamily = '', defaultReference =
           tabIndex={-1}
           role="status"
           className={cn(
-            'border-l-4 bg-white p-5 outline-none',
-            state.status === 'success' ? 'border-evergreen' : 'border-blue-ink',
+            'rounded-lg border bg-white p-5 outline-none ring-1',
+            state.status === 'success'
+              ? 'border-evergreen/45 ring-evergreen/10'
+              : 'border-blue-ink/45 ring-blue-ink/10',
           )}
         >
           <p className="font-semibold text-ink">
