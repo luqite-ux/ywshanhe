@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="swoosh" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2297DC"/>
+      <stop offset="1" stop-color="#0B63A8"/>
+    </linearGradient>
+    <linearGradient id="tree" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#43B06E"/>
+      <stop offset="1" stop-color="#1D7352"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#FAF8F3"/>
+  <path d="M52 17c-6-8-26-9-33-1-6 7 1 13 13 16 11 3 15 8 8 15-6 6-20 6-28 0" fill="none" stroke="url(#swoosh)" stroke-width="6" stroke-linecap="round"/>
+  <path d="M32 12 22 27h5L19 38h7l-4 8h8v6h4v-6h8l-4-8h7L37 27h5Z" fill="url(#tree)"/>
+</svg>

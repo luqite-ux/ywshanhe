@@ -1,0 +1,7 @@
+import { notFound } from 'next/navigation'
+import Image from 'next/image'
+import Link from 'next/link'
+import { fetchProductBySlug } from '@/lib/products-db'
+import { PageIntro } from '@/components/site/page-intro'
+export const revalidate=60; export const dynamicParams=true
+export default async function ProductPage({params}:{params:Promise<{slug:string}>}){const {slug}=await params;const p=await fetchProductBySlug(slug);if(!p)notFound();return <><PageIntro eyebrow="Product" title={p.name} description={p.summary} crumbs={[{label:'Home',href:'/'},{label:'Products',href:'/products'},{label:p.name}]}/><section className="container-site grid gap-12 py-16 lg:grid-cols-2"><div className="relative aspect-square rounded-xl border border-line bg-white"><Image src={p.image.src} alt={p.image.alt} fill className="object-contain p-8" priority/></div><div><h2 className="text-3xl">Construction details</h2><ul className="mt-6 grid gap-3">{p.highlights.map(x=><li key={x} className="rounded-lg border border-line bg-stage px-5 py-4">{x}</li>)}</ul><div className="mt-8 rounded-xl bg-evergreen-deep p-7 text-white"><h2 className="text-2xl">Build this around your brief</h2><p className="mt-3 text-white/75">Specify structure, material, size, colour and branding. The stated MOQ is 1,000 pieces.</p><Link href={`/contact?product=${p.slug}`} className="mt-6 inline-block rounded-md bg-white px-5 py-3 font-semibold text-evergreen-deep">Request a Quote</Link></div></div></section></>}
