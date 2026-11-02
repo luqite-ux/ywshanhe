@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from 'next'
-import { Hanken_Grotesk, Newsreader } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Header } from '@/components/site/header'
 import { Footer } from '@/components/site/footer'
@@ -9,19 +8,6 @@ import { getDictionary } from '@/lib/i18n/get-dictionary'
 import { organizationJsonLd, websiteJsonLd } from '@/lib/seo'
 import { siteConfig } from '@/lib/site'
 import './globals.css'
-
-const bodyFont = Hanken_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-body-src',
-  display: 'swap',
-})
-
-const displayFont = Newsreader({
-  subsets: ['latin'],
-  variable: '--font-display-src',
-  display: 'swap',
-  weight: ['400', '500', '600'],
-})
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -55,7 +41,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   ]
 
   return (
-    <html lang={defaultLocale} className={`${bodyFont.variable} ${displayFont.variable}`}>
+    <html lang={defaultLocale}>
       <body className="min-h-dvh font-sans antialiased">
         <a
           href="#main"

@@ -37,8 +37,8 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-body-src), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-display-src), ui-serif, Georgia, serif;
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-display: Georgia, 'Times New Roman', serif;
 
   --color-paper: var(--paper);
   --color-stage: var(--stage);
