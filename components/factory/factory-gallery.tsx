@@ -20,6 +20,24 @@ const dimensions: Record<string, [number, number]> = {
   'workbook-office': [1702, 1276],
 }
 
+const itemRhythm = [
+  'mb-8',
+  'mb-5 lg:mt-8',
+  'mb-10 lg:mt-3',
+  'mb-6',
+  'mb-11 lg:mt-6',
+  'mb-5',
+  'mb-9 lg:mt-4',
+  'mb-6',
+  'mb-10 lg:mt-10',
+  'mb-5',
+  'mb-8 lg:mt-3',
+]
+
+function isCroppedPhoto(photo: FactoryPhoto) {
+  return photo.id === 'sample-hall'
+}
+
 export function FactoryGallery({ photos }: { photos: FactoryPhoto[] }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const triggerRefs = useRef<Array<HTMLButtonElement | null>>([])
@@ -71,11 +89,11 @@ export function FactoryGallery({ photos }: { photos: FactoryPhoto[] }) {
 
   return (
     <>
-      <div className="mt-8 columns-1 gap-5 sm:columns-2 lg:columns-3">
+      <div className="mt-8 columns-1 gap-3 sm:columns-2 sm:gap-4 lg:columns-3 lg:gap-5">
         {photos.map((photo, index) => {
           const [width, height] = dimensions[photo.id] ?? [1600, 1200]
           return (
-            <Reveal key={photo.id} className="mb-5 break-inside-avoid" delay={(index % 3) * 80}>
+            <Reveal key={photo.id} className={`break-inside-avoid ${itemRhythm[index % itemRhythm.length]}`} delay={(index % 3) * 80}>
               <button
                 ref={(element) => { triggerRefs.current[index] = element }}
                 type="button"
@@ -83,14 +101,26 @@ export function FactoryGallery({ photos }: { photos: FactoryPhoto[] }) {
                 className="group relative block w-full cursor-zoom-in overflow-hidden rounded-xl bg-stage text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-evergreen"
                 aria-label={`Enlarge ${photo.caption}`}
               >
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  width={width}
-                  height={height}
-                  sizes="(min-width: 1024px) 31vw, (min-width: 640px) 48vw, 100vw"
-                  className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.025] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-                />
+                {isCroppedPhoto(photo) ? (
+                  <span className="relative block aspect-[17/10] w-full overflow-hidden">
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      sizes="(min-width: 1024px) 31vw, (min-width: 640px) 48vw, 100vw"
+                      className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.025] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                    />
+                  </span>
+                ) : (
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    width={width}
+                    height={height}
+                    sizes="(min-width: 1024px) 31vw, (min-width: 640px) 48vw, 100vw"
+                    className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.025] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                  />
+                )}
                 <span className="pointer-events-none absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-black/55 text-white opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none">
                   <Expand className="size-4" aria-hidden="true" />
                 </span>
@@ -116,15 +146,21 @@ export function FactoryGallery({ photos }: { photos: FactoryPhoto[] }) {
             <ChevronLeft className="size-6" aria-hidden="true" />
           </button>
           <div className="flex max-h-full max-w-[calc(100vw-2rem)] flex-col items-center gap-3 sm:max-w-[calc(100vw-8rem)]">
-            <Image
-              src={activePhoto.src}
-              alt={activePhoto.alt}
-              width={dimensions[activePhoto.id]?.[0] ?? 1600}
-              height={dimensions[activePhoto.id]?.[1] ?? 1200}
-              sizes="100vw"
-              priority
-              className="max-h-[82vh] w-auto max-w-full rounded-lg object-contain"
-            />
+            {isCroppedPhoto(activePhoto) ? (
+              <div className="relative aspect-[17/10] max-h-[82vh] w-[min(88vw,72rem)] max-w-full overflow-hidden rounded-lg">
+                <Image src={activePhoto.src} alt={activePhoto.alt} fill sizes="100vw" priority className="object-cover object-top" />
+              </div>
+            ) : (
+              <Image
+                src={activePhoto.src}
+                alt={activePhoto.alt}
+                width={dimensions[activePhoto.id]?.[0] ?? 1600}
+                height={dimensions[activePhoto.id]?.[1] ?? 1200}
+                sizes="100vw"
+                priority
+                className="max-h-[82vh] w-auto max-w-full rounded-lg object-contain"
+              />
+            )}
             <p className="text-sm font-medium text-white">{activeIndex + 1} / {photos.length}</p>
           </div>
           <button type="button" onClick={() => setActiveIndex((activeIndex + 1) % photos.length)} className="absolute right-3 top-1/2 z-10 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-white text-ink shadow-lg sm:right-6" aria-label="Next image">
