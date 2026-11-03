@@ -20,7 +20,7 @@ export function Footer({ dict }: { dict: Dictionary }) {
     <footer className="border-t border-line bg-stage">
       <div className="container-site grid gap-12 py-14 lg:grid-cols-[1.3fr_1fr_1fr_1.3fr]">
         <div>
-          <Logo label={dict.header.homeLabel} height={58} />
+          <Logo label={dict.header.homeLabel} height={58} source="workbook" />
           <p className="mt-5 max-w-xs text-[0.95rem] leading-relaxed text-ink-soft">{dict.footer.tagline}</p>
         </div>
 

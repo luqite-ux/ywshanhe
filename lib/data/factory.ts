@@ -145,6 +145,42 @@ export const factoryPhotos: FactoryPhoto[] = [
     aspect: 'aspect-[4/3]',
     objectPosition: 'center',
   },
+  {
+    id: 'workbook-office',
+    group: 'company',
+    src: '/images/factory/workbook-office.jpeg',
+    alt: 'Open-plan Yiwu office with desks, shelving and sample displays',
+    caption: 'Open-plan office',
+    aspect: 'aspect-[17/10]',
+    objectPosition: 'center',
+  },
+  {
+    id: 'workbook-sample-hall',
+    group: 'samples',
+    src: '/images/factory/workbook-sample-hall.jpeg',
+    alt: 'Sample hall with bags displayed on shelving around a meeting table',
+    caption: 'Sample hall and meeting area',
+    aspect: 'aspect-[4/3]',
+    objectPosition: 'center',
+  },
+  {
+    id: 'workbook-sewing-room',
+    group: 'making',
+    src: '/images/factory/workbook-sewing-room.jpeg',
+    alt: 'Sewing room with worktables, machines and bag materials',
+    caption: 'Sewing room',
+    aspect: 'aspect-[4/3]',
+    objectPosition: 'center',
+  },
+  {
+    id: 'workbook-office-aisle',
+    group: 'company',
+    src: '/images/factory/workbook-office-aisle.jpeg',
+    alt: 'Office aisle between workstations and sample shelving',
+    caption: 'Office and sample aisle',
+    aspect: 'aspect-[4/3]',
+    objectPosition: 'center',
+  },
 ]
 
 export function getFactoryPhoto(id: string) {
