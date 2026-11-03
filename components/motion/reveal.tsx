@@ -7,9 +7,10 @@ type RevealState = 'idle' | 'hidden' | 'revealed'
 interface RevealProps {
   as?: ElementType
   className?: string
+  style?: CSSProperties
   /** Stagger in ms, capped at 240 */
   delay?: number
-  variant?: 'rise' | 'mask'
+  variant?: 'rise' | 'mask' | 'waterfall'
   children: ReactNode
 }
 
@@ -17,7 +18,7 @@ interface RevealProps {
  * Content is rendered visible on the server. After hydration, blocks that are still below the fold
  * are hidden and revealed once, when IntersectionObserver reports real viewport entry. No timers.
  */
-export function Reveal({ as: Tag = 'div', className, delay = 0, variant = 'rise', children }: RevealProps) {
+export function Reveal({ as: Tag = 'div', className, style: customStyle, delay = 0, variant = 'rise', children }: RevealProps) {
   const ref = useRef<HTMLElement>(null)
   const [state, setState] = useState<RevealState>('idle')
 
@@ -52,7 +53,10 @@ export function Reveal({ as: Tag = 'div', className, delay = 0, variant = 'rise'
     return () => observer.disconnect()
   }, [])
 
-  const style = { '--reveal-delay': `${Math.min(Math.max(delay, 0), 240)}ms` } as CSSProperties
+  const style = {
+    ...customStyle,
+    '--reveal-delay': `${Math.min(Math.max(delay, 0), 240)}ms`,
+  } as CSSProperties
 
   return (
     <Tag

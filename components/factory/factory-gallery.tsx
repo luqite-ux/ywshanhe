@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight, Expand, X } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Reveal } from '@/components/motion/reveal'
 import type { FactoryPhoto } from '@/lib/data/factory'
 
@@ -33,6 +33,8 @@ const itemRhythm = [
   'mb-5',
   'mb-8 lg:mt-3',
 ]
+
+const waterfallOffsets = ['-22px', '0px', '22px']
 
 function isCroppedPhoto(photo: FactoryPhoto) {
   return photo.id === 'sample-hall'
@@ -93,7 +95,13 @@ export function FactoryGallery({ photos }: { photos: FactoryPhoto[] }) {
         {photos.map((photo, index) => {
           const [width, height] = dimensions[photo.id] ?? [1600, 1200]
           return (
-            <Reveal key={photo.id} className={`break-inside-avoid ${itemRhythm[index % itemRhythm.length]}`} delay={(index % 3) * 80}>
+            <Reveal
+              key={photo.id}
+              className={`break-inside-avoid ${itemRhythm[index % itemRhythm.length]}`}
+              delay={(index % 3) * 100}
+              variant="waterfall"
+              style={{ '--waterfall-x': waterfallOffsets[index % waterfallOffsets.length] } as CSSProperties}
+            >
               <button
                 ref={(element) => { triggerRefs.current[index] = element }}
                 type="button"
