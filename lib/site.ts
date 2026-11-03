@@ -10,6 +10,7 @@ export const siteConfig = {
   address: {
     lines: [
       'Building 4, Floor 1, Shangjing Industrial Zone',
+      'Inside Yiwu Yunxing Color Printing Packaging Co., Ltd.',
       'Xialuozhai, Futian Subdistrict',
       'Yiwu, Jinhua, Zhejiang, China',
     ],
