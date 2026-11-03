@@ -46,6 +46,7 @@ export default async function ProductPage({ params }: PageProps) {
         </dl>
         <h2 className="mt-10 font-display text-2xl font-medium text-ink">Construction and use</h2>
         <ul className="mt-5 grid gap-3">{product.highlights.map((highlight) => <li key={highlight} className="flex items-start gap-3 text-[0.95rem] leading-6 text-ink-soft"><Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-evergreen" /><span>{highlight}</span></li>)}</ul>
+        {product.applications?.length ? <><h2 className="mt-10 font-display text-2xl font-medium text-ink">Applications</h2><ul className="mt-5 grid gap-3 sm:grid-cols-2">{product.applications.map((application) => <li key={application} className="rounded-lg bg-stage px-4 py-3 text-sm leading-6 text-ink-soft">{application}</li>)}</ul></> : null}
         <div className="mt-10 rounded-xl bg-evergreen-deep p-7 text-white">
           <h2 className="font-display text-2xl font-medium">Build this around your brief</h2>
           <p className="mt-3 leading-7 text-white/80">Confirm material, dimensions, colour, artwork and packing requirements with our team. Standard MOQ: 1,000 pieces.</p>

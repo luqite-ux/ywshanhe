@@ -2,7 +2,7 @@ export type CategorySlug = 'fireproof-bags' | 'cosmetic-bags' | 'cooler-bags' | 
 export interface CatalogImage { src: string; alt: string }
 export interface ProductSpec { label: string; value: string }
 export interface Category { slug: CategorySlug; name: string; summary: string; image: CatalogImage }
-export interface Product { slug: string; name: string; categorySlug: CategorySlug; image: CatalogImage; gallery: CatalogImage[]; summary: string; highlights: string[]; specifications: ProductSpec[]; referencePriceUsd?: string; featured?: boolean }
+export interface Product { slug: string; name: string; categorySlug: CategorySlug; image: CatalogImage; gallery: CatalogImage[]; summary: string; highlights: string[]; applications?: string[]; specifications: ProductSpec[]; referencePriceUsd?: string; featured?: boolean }
 
 const img = (slug: string, index: number, alt: string, ext = 'jpg'): CatalogImage => ({ src: `/images/products/${slug}/${String(index).padStart(2, '0')}.${ext}`, alt })
 const supplied = (slug: string, file: string, alt: string): CatalogImage => ({ src: `/images/products/${slug}/${file}`, alt })
@@ -36,7 +36,18 @@ const workbookGallery: Record<string, CatalogImage[]> = {
   'digital-gadget-storage-pouch': [supplied('digital-gadget-storage-pouch', 'xlsx-15.png', 'Grey double-layer gadget organizer with dimensions'), supplied('digital-gadget-storage-pouch', 'xlsx-16.png', 'Black double-layer gadget organizer with dimensions')],
 }
 
-export const products: Product[] = baseProducts.map((product) => ({ ...product, gallery: [...product.gallery, ...(workbookGallery[product.slug] ?? [])] }))
+export const productApplications: Record<string, string[]> = {
+  'fireproof-certificate-bag': ['Home emergency document storage', 'Office archive management', 'Vehicle document storage', 'Outdoor and travel document organization'],
+  'fire-proof-organ-bag-portable': ['Finance, legal and administration files', 'Meeting and client document transport', 'Home contracts, receipts and photo archives'],
+  'fireproof-coin-purse': ['Small valuables in emergency kits', 'Travel and everyday carry', 'Vehicle and safe-box organization'],
+  'double-opening-makeup-bag': ['Business trips and vacations', 'Gym and bathroom organization', 'Beauty-tool and skincare storage'],
+  'cloud-puffer-pouch': ['Makeup brushes and slim cosmetics', 'Pencils and stationery', 'Cables and small accessories'],
+  'drawstring-insulated-lunch-tote': ['Office and student lunches', 'Picnics and day trips', 'Snacks, drinks and baby-bottle carrying'],
+  'passport-organizer-bag': ['Family document management', 'Business and leisure travel', 'Finance and tax record organization'],
+  'digital-gadget-storage-pouch': ['Business trips and commuting', 'Desk and drawer organization', 'Cables, chargers and small electronics'],
+}
+
+export const products: Product[] = baseProducts.map((product) => ({ ...product, applications: productApplications[product.slug] ?? [], gallery: [...product.gallery, ...(workbookGallery[product.slug] ?? [])] }))
 
 export function getCategory(slug: string) { return categories.find((category) => category.slug === slug) }
 export function isCategorySlug(value: string | undefined): value is CategorySlug { return categories.some((category) => category.slug === value) }
