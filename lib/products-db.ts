@@ -1,5 +1,6 @@
 import { getSupabaseClient, tenantId } from './supabase'
 import { productApplications, products as fallback, type CatalogImage, type Product, type ProductSpec } from './data/catalog'
+import { runAbortableQuery } from './query-timeout'
 
 type Row = {
   slug: string
@@ -32,7 +33,8 @@ const map = (row: Row): Product => {
 export async function fetchProductsData() {
   const db = getSupabaseClient(), id = tenantId()
   if (!db || !id) return fallback
-  const { data, error } = await db.from('products').select('slug,name,name_i18n,description,description_i18n,image_url,category_slug,features,features_i18n,applications,applications_i18n,specs,extra_data').eq('tenant_id', id).eq('is_active', true).order('sort_order')
+  const query = db.from('products').select('slug,name,name_i18n,description,description_i18n,image_url,category_slug,features,features_i18n,applications,applications_i18n,specs,extra_data').eq('tenant_id', id).eq('is_active', true).order('sort_order')
+  const { data, error } = await runAbortableQuery(query)
   return error || !data?.length ? fallback : (data as Row[]).map(map)
 }
 export async function fetchProductBySlug(slug: string) { return (await fetchProductsData()).find((product) => product.slug === slug) }
